@@ -11,6 +11,7 @@ import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import ListItem from '../../components/ListItem/ListItem';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ProductStackParamList} from '../../App';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type ProductListNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -23,7 +24,7 @@ interface Props {
 
 const ProductList: React.FC<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [ingredients, setIngredients] = useState<any>([]);
+  const [products, setProducts] = useState<any>([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,7 +39,7 @@ const ProductList: React.FC<Props> = ({navigation}) => {
 
   useEffect(() => {
     const subscriber = firestore()
-      .collection('Ingredients')
+      .collection('Products')
       .onSnapshot((querySnapshot) => {
         const result: any = [];
 
@@ -49,12 +50,16 @@ const ProductList: React.FC<Props> = ({navigation}) => {
           });
         });
 
-        setIngredients(result);
+        setProducts(result);
         setIsLoading(false);
       });
 
     return () => subscriber();
   }, []);
+
+  const navigateToProductDetail = (productId: string) => {
+    navigation.navigate('ProductDetail', {productId});
+  };
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -63,11 +68,13 @@ const ProductList: React.FC<Props> = ({navigation}) => {
   return (
     <ScreenContainer>
       <FlatList
-        data={ingredients}
+        data={products}
         renderItem={({item}) => (
-          <ListItem>
-            <Text>{item.name}</Text>
-          </ListItem>
+          <TouchableOpacity onPress={() => navigateToProductDetail(item.key)}>
+            <ListItem>
+              <Text>{item.name}</Text>
+            </ListItem>
+          </TouchableOpacity>
         )}
       />
     </ScreenContainer>

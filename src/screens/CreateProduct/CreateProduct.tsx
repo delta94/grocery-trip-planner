@@ -22,7 +22,7 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
   const isValidProductName = (value: string) => !!value.length;
 
   const addIngredient = async () => {
-    firestore().collection('Ingredients').add({
+    firestore().collection('Products').add({
       name: inputValue,
     });
   };
