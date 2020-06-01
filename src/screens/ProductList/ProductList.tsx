@@ -9,8 +9,19 @@ import {
 } from 'react-native';
 import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import ListItem from '../../components/ListItem/ListItem';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ProductStackParamList} from '../../App';
 
-const ProductList: React.FC<any> = ({navigation}) => {
+type ProductListNavigationProp = StackNavigationProp<
+  ProductStackParamList,
+  'CreateProduct'
+>;
+
+interface Props {
+  navigation: ProductListNavigationProp;
+}
+
+const ProductList: React.FC<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState<any>([]);
 

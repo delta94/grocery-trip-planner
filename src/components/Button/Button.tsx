@@ -2,7 +2,12 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 
-const Button: React.FC<any> = ({children, onPress, disabled}) => {
+interface Props {
+  onPress: () => void;
+  disabled: boolean;
+}
+
+const Button: React.FC<Props> = ({children, onPress, disabled}) => {
   return (
     <TouchableOpacity
       disabled={disabled}

@@ -4,8 +4,19 @@ import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import Input from '../../components/TextInput/TextInput';
 import {Text} from 'react-native';
 import Button from '../../components/Button/Button';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ProductStackParamList} from '../../App';
 
-const CreateProduct: React.FC<any> = ({navigation}) => {
+type ProductListNavigationProp = StackNavigationProp<
+  ProductStackParamList,
+  'ProductList'
+>;
+
+interface Props {
+  navigation: ProductListNavigationProp;
+}
+
+const CreateProduct: React.FC<Props> = ({navigation}) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const isValidProductName = (value: string) => !!value.length;
@@ -32,7 +43,7 @@ const CreateProduct: React.FC<any> = ({navigation}) => {
       />
       <Button
         onPress={onPressCreateProduct}
-        isDisabled={!isValidProductName(inputValue)}>
+        disabled={!isValidProductName(inputValue)}>
         <Text>Create product</Text>
       </Button>
     </ScreenContainer>

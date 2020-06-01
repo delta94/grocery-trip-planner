@@ -2,11 +2,17 @@ import React from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 
-const Input: React.FC<any> = ({value, onChangeText, placeholder}) => {
+interface Props {
+  value: string;
+  onChangeText: (value: string) => void;
+  placeholder: string;
+}
+
+const Input: React.FC<Props> = ({value, onChangeText, placeholder}) => {
   return (
     <TextInput
       style={styles.input}
-      value={value.length ? value : null}
+      value={value.length ? value : undefined}
       onChangeText={onChangeText}
       placeholder={placeholder}
     />

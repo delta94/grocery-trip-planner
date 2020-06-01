@@ -1,7 +1,18 @@
 import React from 'react';
 import {Text} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ProductStackParamList} from '../../App';
 
-const ProductDetail: React.FC = () => {
+type ProductListNavigationProp = StackNavigationProp<
+  ProductStackParamList,
+  'ProductDetail'
+>;
+
+interface Props {
+  navigation: ProductListNavigationProp;
+}
+
+const ProductDetail: React.FC<Props> = () => {
   return <Text>Product Detail</Text>;
 };
 

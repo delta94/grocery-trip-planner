@@ -10,6 +10,12 @@ import CreateProduct from './screens/CreateProduct/CreateProduct';
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
 
+export type ProductStackParamList = {
+  ProductList: undefined;
+  CreateProduct: undefined;
+  ProductDetail: {productId: string};
+};
+
 const ProductStackNavigator = () => {
   return (
     <ProductStack.Navigator>
