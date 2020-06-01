@@ -1,30 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {
   Button,
-  TextInput,
   StyleSheet,
   ActivityIndicator,
   FlatList,
-  View,
   Text,
 } from 'react-native';
 import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
+import ListItem from '../../components/ListItem/ListItem';
 
-const ProductList: React.FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
+const ProductList: React.FC<any> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState<any>([]);
 
-  const addIngredient = async () => {
-    if (!inputValue.length) {
-      return;
-    }
-
-    firestore().collection('Ingredients').add({
-      name: inputValue,
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={() => navigation.navigate('CreateProduct')}
+          title="Add"
+        />
+      ),
     });
-  };
+  }, [navigation]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -52,35 +51,16 @@ const ProductList: React.FC = () => {
 
   return (
     <ScreenContainer>
-      <TextInput
-        placeholder="Enter ingredient"
-        style={styles.input}
-        value={inputValue}
-        onChangeText={setInputValue}
-      />
-      <Button title="Add ingredient" onPress={addIngredient} />
       <FlatList
-        style={styles.list}
         data={ingredients}
         renderItem={({item}) => (
-          <View>
+          <ListItem>
             <Text>{item.name}</Text>
-          </View>
+          </ListItem>
         )}
       />
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    height: 80,
-    width: '100%',
-    textAlign: 'center',
-  },
-  list: {
-    margin: 30,
-  },
-});
 
 export default ProductList;

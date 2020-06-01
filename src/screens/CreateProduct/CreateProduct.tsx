@@ -1,8 +1,30 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, {useState} from 'react';
+import firestore from '@react-native-firebase/firestore';
+import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
+import Input from '../../components/TextInput/TextInput';
 
 const CreateProduct: React.FC = () => {
-  return <Text>Create Product</Text>;
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const addIngredient = async () => {
+    if (!inputValue.length) {
+      return;
+    }
+
+    firestore().collection('Ingredients').add({
+      name: inputValue,
+    });
+  };
+
+  return (
+    <ScreenContainer>
+      <Input
+        value={inputValue}
+        onChangeValue={setInputValue}
+        placeholder={"Enter the product's name"}
+      />
+    </ScreenContainer>
+  );
 };
 
 export default CreateProduct;

@@ -13,9 +13,9 @@ const ProductStack = createStackNavigator();
 const ProductStackNavigator = () => {
   return (
     <ProductStack.Navigator>
-      <ProductStack.Screen name="Products" component={ProductList} />
-      <ProductStack.Screen name="Product detail" component={ProductDetail} />
-      <ProductStack.Screen name="Create product" component={CreateProduct} />
+      <ProductStack.Screen name="ProductList" component={ProductList} />
+      <ProductStack.Screen name="ProductDetail" component={ProductDetail} />
+      <ProductStack.Screen name="CreateProduct" component={CreateProduct} />
     </ProductStack.Navigator>
   );
 };
