@@ -1,96 +1,33 @@
-import React, {useEffect, useState} from 'react';
-import firestore from '@react-native-firebase/firestore';
-import {
-  SafeAreaView,
-  StatusBar,
-  Button,
-  TextInput,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-  View,
-  Text,
-} from 'react-native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const App: () => React.ReactNode = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [ingredients, setIngredients] = useState<any>([]);
+import ProductList from './screens/ProductList/ProductList';
+import ProductDetail from './screens/ProductDetail/ProductDetail';
+import CreateProduct from './screens/CreateProduct/CreateProduct';
 
-  const addIngredient = async () => {
-    if (!inputValue.length) {
-      return;
-    }
+const Tab = createBottomTabNavigator();
+const ProductStack = createStackNavigator();
 
-    firestore().collection('Ingredients').add({
-      name: inputValue,
-    });
-  };
-
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('Ingredients')
-      .onSnapshot((querySnapshot) => {
-        const result: any = [];
-
-        querySnapshot.forEach((documentSnapshot) => {
-          result.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setIngredients(result);
-        setIsLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
-
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
+const ProductStackNavigator = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
-        <TextInput
-          placeholder="Enter ingredient"
-          style={styles.input}
-          value={inputValue}
-          onChangeText={setInputValue}
-        />
-        <Button title="Add ingredient" onPress={addIngredient} />
-        <FlatList
-          style={styles.list}
-          data={ingredients}
-          renderItem={({item}) => (
-            <View>
-              <Text>{item.name}</Text>
-            </View>
-          )}
-        />
-      </SafeAreaView>
-    </>
+    <ProductStack.Navigator>
+      <ProductStack.Screen name="Products" component={ProductList} />
+      <ProductStack.Screen name="Product detail" component={ProductDetail} />
+      <ProductStack.Screen name="Create product" component={CreateProduct} />
+    </ProductStack.Navigator>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    height: 80,
-    width: '100%',
-    textAlign: 'center',
-  },
-  list: {
-    margin: 30,
-  },
-});
+const App: () => React.ReactNode = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Products" component={ProductStackNavigator} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
