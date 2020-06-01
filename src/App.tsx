@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ProductList from './screens/ProductList/ProductList';
 import ProductDetail from './screens/ProductDetail/ProductDetail';
 import CreateProduct from './screens/CreateProduct/CreateProduct';
+import {Product} from './types/Product';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -13,7 +14,7 @@ const ProductStack = createStackNavigator();
 export type ProductStackParamList = {
   ProductList: undefined;
   CreateProduct: undefined;
-  ProductDetail: {productId: string};
+  ProductDetail: Product;
 };
 
 const ProductStackNavigator = () => {

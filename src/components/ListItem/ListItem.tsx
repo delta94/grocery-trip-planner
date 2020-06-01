@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-const ListItem: React.FC = ({children}) => {
-  return <View style={styles.listItem}>{children}</View>;
-};
+const ListItem: React.FC = ({children}) => (
+  <View style={styles.listItem}>{children}</View>
+);
 
 const styles = StyleSheet.create({
   listItem: {
