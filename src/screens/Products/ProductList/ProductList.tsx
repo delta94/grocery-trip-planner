@@ -1,31 +1,31 @@
 import React, {useEffect, useState, useLayoutEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {Button, ActivityIndicator, FlatList, Text} from 'react-native';
-import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
-import ListItem from '../../components/ListItem/ListItem';
+import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
+import ListItem from '../../../components/ListItem/ListItem';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RecipeStackParamList} from '../../App';
+import {ProductStackParamList} from '../../../App';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Recipe} from '../../types/Recipe';
+import {Product} from '../../../types/Product';
 
-type RecipeListNavigationProp = StackNavigationProp<
-  RecipeStackParamList,
-  'RecipeList'
+type ProductListNavigationProp = StackNavigationProp<
+  ProductStackParamList,
+  'ProductList'
 >;
 
 interface Props {
-  navigation: RecipeListNavigationProp;
+  navigation: ProductListNavigationProp;
 }
 
-const RecipeList: React.FC<Props> = ({navigation}) => {
+const ProductList: React.FC<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [recipes, setRecipes] = useState<any>([]);
+  const [products, setProducts] = useState<any>([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          onPress={() => console.log('navigate to create recipe')}
+          onPress={() => navigation.navigate('CreateProduct')}
           title="Add"
         />
       ),
@@ -34,7 +34,7 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
 
   useEffect(() => {
     const subscriber = firestore()
-      .collection('Recipes')
+      .collection('Products')
       .onSnapshot((querySnapshot) => {
         const result: any = [];
 
@@ -45,15 +45,15 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
           });
         });
 
-        setRecipes(result);
+        setProducts(result);
         setIsLoading(false);
       });
 
     return () => subscriber();
   }, []);
 
-  const navigateToRecipeDetail = (recipe: Recipe) => {
-    console.log('navigate to recipe details');
+  const navigateToProductDetail = (product: Product) => {
+    navigation.navigate('ProductDetail', product);
   };
 
   if (isLoading) {
@@ -63,9 +63,9 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
   return (
     <ScreenContainer>
       <FlatList
-        data={recipes}
+        data={products}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => navigateToRecipeDetail(item)}>
+          <TouchableOpacity onPress={() => navigateToProductDetail(item)}>
             <ListItem>
               <Text>{item.name}</Text>
             </ListItem>
@@ -76,4 +76,4 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default RecipeList;
+export default ProductList;

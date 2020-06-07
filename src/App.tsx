@@ -3,11 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import ProductList from './screens/ProductList/ProductList';
-import ProductDetail from './screens/ProductDetail/ProductDetail';
-import CreateProduct from './screens/CreateProduct/CreateProduct';
+import ProductList from './screens/Products/ProductList/ProductList';
+import ProductDetail from './screens/Products/ProductDetail/ProductDetail';
+import CreateProduct from './screens/Products/CreateProduct/CreateProduct';
 import {Product} from './types/Product';
-import RecipeList from './screens/RecipeList/RecipeList';
+import RecipeList from './screens/Recipes/RecipeList/RecipeList';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();

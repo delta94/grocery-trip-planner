@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
-import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
-import Input from '../../components/TextInput/TextInput';
+import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
+import Input from '../../../components/TextInput/TextInput';
 import {Text} from 'react-native';
-import Button from '../../components/Button/Button';
+import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ProductStackParamList} from '../../App';
+import {ProductStackParamList} from '../../../App';
 
 type ProductListNavigationProp = StackNavigationProp<
   ProductStackParamList,
