@@ -6,15 +6,22 @@ interface Props {
   value: string;
   onChangeText: (value: string) => void;
   placeholder: string;
+  multiLine?: boolean;
 }
 
-const Input: React.FC<Props> = ({value, onChangeText, placeholder}) => {
+const Input: React.FC<Props> = ({
+  value,
+  onChangeText,
+  placeholder,
+  multiLine = false,
+}) => {
   return (
     <TextInput
       style={styles.input}
       value={value.length ? value : undefined}
       onChangeText={onChangeText}
       placeholder={placeholder}
+      multiline={multiLine}
     />
   );
 };

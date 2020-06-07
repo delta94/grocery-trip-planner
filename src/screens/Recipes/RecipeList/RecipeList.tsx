@@ -25,7 +25,7 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          onPress={() => console.log('navigate to create recipe')}
+          onPress={() => navigation.navigate('CreateRecipe')}
           title="Add"
         />
       ),

@@ -8,6 +8,7 @@ import ProductDetail from './screens/Products/ProductDetail/ProductDetail';
 import CreateProduct from './screens/Products/CreateProduct/CreateProduct';
 import {Product} from './types/Product';
 import RecipeList from './screens/Recipes/RecipeList/RecipeList';
+import CreateRecipe from './screens/Recipes/CreateRecipe/CreateRecipe';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -21,6 +22,7 @@ export type ProductStackParamList = {
 
 export type RecipeStackParamList = {
   RecipeList: undefined;
+  CreateRecipe: undefined;
 };
 
 const ProductStackNavigator = () => {
@@ -37,6 +39,7 @@ const RecipeStackNavigator = () => {
   return (
     <RecipeStack.Navigator>
       <RecipeStack.Screen name="RecipeList" component={RecipeList} />
+      <RecipeStack.Screen name="CreateRecipe" component={CreateRecipe} />
     </RecipeStack.Navigator>
   );
 };

@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
-import Input from '../../../components/TextInput/TextInput';
+import Input from '../../../components/Input/Input';
 import {Text} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ProductStackParamList} from '../../../App';
 
-type ProductListNavigationProp = StackNavigationProp<
+type CreateProductNavigationProp = StackNavigationProp<
   ProductStackParamList,
-  'ProductList'
+  'CreateProduct'
 >;
 
 interface Props {
-  navigation: ProductListNavigationProp;
+  navigation: CreateProductNavigationProp;
 }
 
 const CreateProduct: React.FC<Props> = ({navigation}) => {
@@ -21,7 +21,7 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
 
   const isValidProductName = (value: string) => !!value.length;
 
-  const addIngredient = async () => {
+  const addProduct = async () => {
     firestore().collection('Products').add({
       name: inputValue,
     });
@@ -29,7 +29,7 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
 
   const onPressCreateProduct = () => {
     if (isValidProductName(inputValue)) {
-      addIngredient();
+      addProduct();
       navigation.navigate('ProductList');
     }
   };
