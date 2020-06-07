@@ -4,28 +4,28 @@ import {Button, ActivityIndicator, FlatList, Text} from 'react-native';
 import ScreenContainer from '../../components/ScreenContainer/ScreenContainer';
 import ListItem from '../../components/ListItem/ListItem';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ProductStackParamList} from '../../App';
+import {RecipeStackParamList} from '../../App';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Product} from '../../types/Product';
+import {Recipe} from '../../types/Recipe';
 
-type ProductListNavigationProp = StackNavigationProp<
-  ProductStackParamList,
-  'ProductList'
+type RecipeListNavigationProp = StackNavigationProp<
+  RecipeStackParamList,
+  'RecipeList'
 >;
 
 interface Props {
-  navigation: ProductListNavigationProp;
+  navigation: RecipeListNavigationProp;
 }
 
-const ProductList: React.FC<Props> = ({navigation}) => {
+const RecipeList: React.FC<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<any>([]);
+  const [recipes, setRecipes] = useState<any>([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          onPress={() => navigation.navigate('CreateProduct')}
+          onPress={() => console.log('navigate to create recipe')}
           title="Add"
         />
       ),
@@ -34,7 +34,7 @@ const ProductList: React.FC<Props> = ({navigation}) => {
 
   useEffect(() => {
     const subscriber = firestore()
-      .collection('Products')
+      .collection('Recipes')
       .onSnapshot((querySnapshot) => {
         const result: any = [];
 
@@ -45,15 +45,15 @@ const ProductList: React.FC<Props> = ({navigation}) => {
           });
         });
 
-        setProducts(result);
+        setRecipes(result);
         setIsLoading(false);
       });
 
     return () => subscriber();
   }, []);
 
-  const navigateToProductDetail = (product: Product) => {
-    navigation.navigate('ProductDetail', product);
+  const navigateToRecipeDetail = (recipe: Recipe) => {
+    console.log('navigate to recipe details');
   };
 
   if (isLoading) {
@@ -63,9 +63,9 @@ const ProductList: React.FC<Props> = ({navigation}) => {
   return (
     <ScreenContainer>
       <FlatList
-        data={products}
+        data={recipes}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => navigateToProductDetail(item)}>
+          <TouchableOpacity onPress={() => navigateToRecipeDetail(item)}>
             <ListItem>
               <Text>{item.name}</Text>
             </ListItem>
@@ -76,4 +76,4 @@ const ProductList: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default ProductList;
+export default RecipeList;
