@@ -9,6 +9,7 @@ import CreateProduct from './screens/Products/CreateProduct/CreateProduct';
 import {Product} from './types/Product';
 import RecipeList from './screens/Recipes/RecipeList/RecipeList';
 import CreateRecipe from './screens/Recipes/CreateRecipe/CreateRecipe';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -47,7 +48,22 @@ const RecipeStackNavigator = () => {
 const App: () => React.ReactNode = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            switch (route.name) {
+              case 'Recipes': {
+                return <Ionicons name={'ios-book'} size={size} color={color} />;
+              }
+              case 'Products':
+              default: {
+                return (
+                  <Ionicons name={'ios-nutrition'} size={size} color={color} />
+                );
+              }
+            }
+          },
+        })}>
         <Tab.Screen name="Recipes" component={RecipeStackNavigator} />
         <Tab.Screen name="Products" component={ProductStackNavigator} />
       </Tab.Navigator>
