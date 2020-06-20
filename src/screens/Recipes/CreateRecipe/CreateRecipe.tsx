@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Input from '../../../components/Input/Input';
-import {Text} from 'react-native';
+import {Text, FlatList, View} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RecipeStackParamList} from '../../../App';
+import ListItem from '../../../components/ListItem/ListItem';
+import {Ingredient} from '../../../types/Ingredient';
+import {Product} from '../../../types/Product';
 
 type CreateRecipeNavigationProp = StackNavigationProp<
   RecipeStackParamList,
@@ -19,6 +22,7 @@ interface Props {
 const CreateRecipe: React.FC<Props> = ({navigation}) => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const isValidRecipeName = (value: string) => !!value.length;
 
@@ -35,6 +39,22 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
     }
   };
 
+  const addIngredient = (product: Product) => {
+    setIngredients([
+      ...ingredients,
+      {
+        productKey: product.key,
+        quantity: 1,
+      },
+    ]);
+  };
+
+  const openAddIngredientPage = () => {
+    navigation.navigate('AddIngredient', {
+      onGoBack: addIngredient,
+    });
+  };
+
   return (
     <ScreenContainer>
       <Input
@@ -48,6 +68,23 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
         multiLine={true}
         placeholder={"Enter the recipe's description"}
       />
+
+      {ingredients.length ? (
+        <FlatList
+          data={ingredients}
+          keyExtractor={(item) => item.productKey}
+          renderItem={({item}) => (
+            <ListItem>
+              <Text>{item.productKey}</Text>
+            </ListItem>
+          )}
+        />
+      ) : null}
+
+      <Button onPress={openAddIngredientPage}>
+        <Text>Add ingredient</Text>
+      </Button>
+
       <Button onPress={onPressCreateRecipe} disabled={!isValidRecipeName(name)}>
         <Text>Create recipe</Text>
       </Button>

@@ -4,10 +4,10 @@ import {StyleSheet} from 'react-native';
 
 interface Props {
   onPress: () => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({children, onPress, disabled}) => {
+const Button: React.FC<Props> = ({children, onPress, disabled = false}) => {
   return (
     <TouchableOpacity
       disabled={disabled}

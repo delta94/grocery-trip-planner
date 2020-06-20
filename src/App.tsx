@@ -10,6 +10,7 @@ import {Product} from './types/Product';
 import RecipeList from './screens/Recipes/RecipeList/RecipeList';
 import CreateRecipe from './screens/Recipes/CreateRecipe/CreateRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AddIngredient from './screens/Recipes/AddIngredient/AddIngredient';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -24,6 +25,9 @@ export type ProductStackParamList = {
 export type RecipeStackParamList = {
   RecipeList: undefined;
   CreateRecipe: undefined;
+  AddIngredient: {
+    onGoBack: (product: Product) => void;
+  };
 };
 
 const ProductStackNavigator = () => {
@@ -41,6 +45,7 @@ const RecipeStackNavigator = () => {
     <RecipeStack.Navigator>
       <RecipeStack.Screen name="RecipeList" component={RecipeList} />
       <RecipeStack.Screen name="CreateRecipe" component={CreateRecipe} />
+      <RecipeStack.Screen name="AddIngredient" component={AddIngredient} />
     </RecipeStack.Navigator>
   );
 };

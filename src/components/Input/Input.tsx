@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     margin: 32,
     padding: 16,
     borderWidth: 1,
+    textAlignVertical: 'top',
     borderColor: 'grey',
   },
 });

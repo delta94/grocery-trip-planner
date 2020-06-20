@@ -1,36 +1,27 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react';
+import {RecipeStackParamList} from '../../../App';
 import firestore from '@react-native-firebase/firestore';
-import {Button, ActivityIndicator, FlatList, Text} from 'react-native';
-import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
-import ListItem from '../../../components/ListItem/ListItem';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ProductStackParamList} from '../../../App';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, {useState, useEffect} from 'react';
+import {ActivityIndicator, Text} from 'react-native';
 import {Product} from '../../../types/Product';
+import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import ListItem from '../../../components/ListItem/ListItem';
+import {RouteProp} from '@react-navigation/native';
+import {YellowBox} from 'react-native';
 
-type ProductListNavigationProp = StackNavigationProp<
-  ProductStackParamList,
-  'ProductList'
->;
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 interface Props {
-  navigation: ProductListNavigationProp;
+  navigation: StackNavigationProp<RecipeStackParamList, 'AddIngredient'>;
+  route: RouteProp<RecipeStackParamList, 'AddIngredient'>;
 }
 
-const ProductList: React.FC<Props> = ({navigation}) => {
+const AddIngredient: React.FC<Props> = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          onPress={() => navigation.navigate('CreateProduct')}
-          title="Add"
-        />
-      ),
-    });
-  }, [navigation]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -52,8 +43,9 @@ const ProductList: React.FC<Props> = ({navigation}) => {
     return () => subscriber();
   }, []);
 
-  const navigateToProductDetail = (product: Product) => {
-    navigation.navigate('ProductDetail', product);
+  const selectProduct = (product: Product) => {
+    route.params.onGoBack(product);
+    navigation.goBack();
   };
 
   if (isLoading) {
@@ -65,7 +57,7 @@ const ProductList: React.FC<Props> = ({navigation}) => {
       <FlatList
         data={products}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => navigateToProductDetail(item)}>
+          <TouchableOpacity onPress={() => selectProduct(item)}>
             <ListItem>
               <Text>{item.name}</Text>
             </ListItem>
@@ -76,4 +68,4 @@ const ProductList: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default ProductList;
+export default AddIngredient;
