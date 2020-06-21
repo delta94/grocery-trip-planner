@@ -35,9 +35,21 @@ export type RecipeStackParamList = {
 const ProductStackNavigator = () => {
   return (
     <ProductStack.Navigator>
-      <ProductStack.Screen name="ProductList" component={ProductList} />
-      <ProductStack.Screen name="ProductDetail" component={ProductDetail} />
-      <ProductStack.Screen name="CreateProduct" component={CreateProduct} />
+      <ProductStack.Screen
+        name="ProductList"
+        component={ProductList}
+        options={{title: 'Products'}}
+      />
+      <ProductStack.Screen
+        name="ProductDetail"
+        component={ProductDetail}
+        options={{title: 'Product'}}
+      />
+      <ProductStack.Screen
+        name="CreateProduct"
+        component={CreateProduct}
+        options={{title: 'Add a product'}}
+      />
     </ProductStack.Navigator>
   );
 };
@@ -45,9 +57,21 @@ const ProductStackNavigator = () => {
 const RecipeStackNavigator = () => {
   return (
     <RecipeStack.Navigator>
-      <RecipeStack.Screen name="RecipeList" component={RecipeList} />
-      <RecipeStack.Screen name="CreateRecipe" component={CreateRecipe} />
-      <RecipeStack.Screen name="AddIngredient" component={AddIngredient} />
+      <RecipeStack.Screen
+        name="RecipeList"
+        component={RecipeList}
+        options={{title: 'Cookbook'}}
+      />
+      <RecipeStack.Screen
+        name="CreateRecipe"
+        component={CreateRecipe}
+        options={{title: 'Create a recipe'}}
+      />
+      <RecipeStack.Screen
+        name="AddIngredient"
+        component={AddIngredient}
+        options={{title: 'Add an ingredient'}}
+      />
     </RecipeStack.Navigator>
   );
 };
@@ -77,7 +101,11 @@ const App: () => React.ReactNode = () => {
             }
           },
         })}>
-        <Tab.Screen name="Recipes" component={RecipeStackNavigator} />
+        <Tab.Screen
+          name="Recipes"
+          component={RecipeStackNavigator}
+          options={{title: 'Cookbook'}}
+        />
         <Tab.Screen name="Products" component={ProductStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
