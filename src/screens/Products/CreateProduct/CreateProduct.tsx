@@ -39,7 +39,7 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
       <Button
         onPress={onPressCreateProduct}
         disabled={!isValidProductName(inputValue)}>
-        <Text>Create product</Text>
+        Create product
       </Button>
     </ScreenContainer>
   );

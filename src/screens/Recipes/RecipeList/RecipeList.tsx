@@ -41,9 +41,7 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
         data={recipeStore.recipes}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => navigateToRecipeDetail(item)}>
-            <ListItem>
-              <Text>{item.name}</Text>
-            </ListItem>
+            <ListItem>{item.name}</ListItem>
           </TouchableOpacity>
         )}
       />

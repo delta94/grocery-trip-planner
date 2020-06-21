@@ -9,6 +9,7 @@ import ListItem from '../../../components/ListItem/ListItem';
 import {Ingredient} from '../../../types/Ingredient';
 import {Product} from '../../../types/Product';
 import {productStore} from '../../../stores/products/ProductStore';
+import ListItemWithQuantity from '../../../components/ListItemWithQuantity/ListItemWithQuantity';
 
 type CreateRecipeNavigationProp = StackNavigationProp<
   RecipeStackParamList,
@@ -41,7 +42,7 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
       ? setIngredients(
           ingredients.map((item: Ingredient) =>
             item.productKey === product.key
-              ? {...item, quantity: item.quantity++}
+              ? {...item, quantity: item.quantity + 1}
               : item,
           ),
         )
@@ -64,13 +65,11 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
     const product = productStore.getProductByKey(item.productKey);
 
     return product ? (
-      <ListItem>
-        <Text>{product.name}</Text>
-      </ListItem>
+      <ListItemWithQuantity quantity={item.quantity}>
+        {product.name}
+      </ListItemWithQuantity>
     ) : (
-      <ListItem>
-        <Text>Product missing</Text>
-      </ListItem>
+      <ListItem>Product missing</ListItem>
     );
   };
 
@@ -96,12 +95,10 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
         />
       ) : null}
 
-      <Button onPress={openAddIngredientPage}>
-        <Text>Add ingredient</Text>
-      </Button>
+      <Button onPress={openAddIngredientPage}>Add ingredient</Button>
 
       <Button onPress={onPressCreateRecipe} disabled={!isValidRecipeName(name)}>
-        <Text>Create recipe</Text>
+        Create recipe
       </Button>
     </ScreenContainer>
   );

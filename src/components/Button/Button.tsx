@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 interface Props {
   onPress: () => void;
@@ -13,7 +13,7 @@ const Button: React.FC<Props> = ({children, onPress, disabled = false}) => {
       disabled={disabled}
       style={styles.button}
       onPress={onPress}>
-      {children}
+      <Text>{children}</Text>
     </TouchableOpacity>
   );
 };

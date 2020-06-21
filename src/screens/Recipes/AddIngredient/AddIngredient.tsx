@@ -32,9 +32,7 @@ const AddIngredient: React.FC<Props> = ({navigation, route}) => {
         data={productStore.products}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => selectProduct(item)}>
-            <ListItem>
-              <Text>{item.name}</Text>
-            </ListItem>
+            <ListItem>{item.name}</ListItem>
           </TouchableOpacity>
         )}
       />

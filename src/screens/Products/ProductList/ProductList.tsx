@@ -41,9 +41,7 @@ const ProductList: React.FC<Props> = ({navigation}) => {
         data={productStore.products}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => navigateToProductDetail(item)}>
-            <ListItem>
-              <Text>{item.name}</Text>
-            </ListItem>
+            <ListItem>{item.name}</ListItem>
           </TouchableOpacity>
         )}
       />
