@@ -10,6 +10,7 @@ import {Ingredient} from '../../../types/Ingredient';
 import {Product} from '../../../types/Product';
 import {productStore} from '../../../stores/products/ProductStore';
 import ListItemWithQuantity from '../../../components/ListItemWithQuantity/ListItemWithQuantity';
+import {recipeStore} from '../../../stores/recipes/RecipeStore';
 
 type CreateRecipeNavigationProp = StackNavigationProp<
   RecipeStackParamList,
@@ -25,10 +26,12 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
   const [description, setDescription] = useState<string>('');
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-  const isValidRecipeName = (value: string) => !!value.length;
+  const isValidRecipe = () =>
+    !!name.length || !!description.length || !!ingredients.length;
 
   const onPressCreateRecipe = () => {
-    if (isValidRecipeName(name)) {
+    if (isValidRecipe()) {
+      recipeStore.createRecipe(name, description, ingredients);
       navigation.navigate('RecipeList');
     }
   };
@@ -97,7 +100,7 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
 
       <Button onPress={openAddIngredientPage}>Add ingredient</Button>
 
-      <Button onPress={onPressCreateRecipe} disabled={!isValidRecipeName(name)}>
+      <Button onPress={onPressCreateRecipe} disabled={!isValidRecipe()}>
         Create recipe
       </Button>
     </ScreenContainer>

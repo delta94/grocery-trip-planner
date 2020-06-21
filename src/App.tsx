@@ -12,6 +12,7 @@ import CreateRecipe from './screens/Recipes/CreateRecipe/CreateRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddIngredient from './screens/Recipes/AddIngredient/AddIngredient';
 import {productStore} from './stores/products/ProductStore';
+import {recipeStore} from './stores/recipes/RecipeStore';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -53,7 +54,9 @@ const RecipeStackNavigator = () => {
 
 const App: () => React.ReactNode = () => {
   useEffect(() => {
+    //TODO optimize subbing to firestore.
     productStore.subscribe();
+    recipeStore.subscribe();
   }, []);
 
   return (

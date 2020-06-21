@@ -1,12 +1,18 @@
-import {observable} from 'mobx';
+import {observable, action} from 'mobx';
 import firestore from '@react-native-firebase/firestore';
 import {Recipe} from '../../types/Recipe';
+import {Ingredient} from '../../types/Ingredient';
 
 export interface RecipeStore {
   recipes: Recipe[];
   subscriber: any;
 
   subscribe: () => void;
+  createRecipe: (
+    name: string,
+    description: string,
+    ingredients: Ingredient[],
+  ) => void;
 }
 
 export const recipeStore = observable<RecipeStore>(
@@ -30,6 +36,20 @@ export const recipeStore = observable<RecipeStore>(
           this.recipes = result;
         });
     },
+
+    createRecipe: (
+      name: string,
+      description: string,
+      ingredients: Ingredient[],
+    ) => {
+      firestore().collection('Recipes').add({
+        name,
+        description,
+        ingredients,
+      });
+    },
   },
-  {},
+  {
+    createRecipe: action.bound,
+  },
 );
