@@ -1,24 +1,19 @@
 import React, {useState} from 'react';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Input from '../../../components/Input/Input';
-import {Text, FlatList, View, ListRenderItem} from 'react-native';
+import {FlatList, ListRenderItem} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RecipeStackParamList} from '../../../App';
 import ListItem from '../../../components/ListItem/ListItem';
 import {Ingredient} from '../../../types/Ingredient';
 import {Product} from '../../../types/Product';
 import {productStore} from '../../../stores/products/ProductStore';
 import ListItemWithQuantity from '../../../components/ListItemWithQuantity/ListItemWithQuantity';
 import {recipeStore} from '../../../stores/recipes/RecipeStore';
-
-type CreateRecipeNavigationProp = StackNavigationProp<
-  RecipeStackParamList,
-  'CreateRecipe'
->;
+import {RecipeStackParamList} from '../../../navigators/RecipeStackNavigator/RecipeStackNavigator';
 
 interface Props {
-  navigation: CreateRecipeNavigationProp;
+  navigation: StackNavigationProp<RecipeStackParamList, 'CreateRecipe'>;
 }
 
 const CreateRecipe: React.FC<Props> = ({navigation}) => {

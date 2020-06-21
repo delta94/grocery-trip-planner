@@ -4,19 +4,14 @@ import {Button, ActivityIndicator, FlatList, Text} from 'react-native';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import ListItem from '../../../components/ListItem/ListItem';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RecipeStackParamList} from '../../../App';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Recipe} from '../../../types/Recipe';
 import {observer} from 'mobx-react';
 import {recipeStore} from '../../../stores/recipes/RecipeStore';
-
-type RecipeListNavigationProp = StackNavigationProp<
-  RecipeStackParamList,
-  'RecipeList'
->;
+import {RecipeStackParamList} from '../../../navigators/RecipeStackNavigator/RecipeStackNavigator';
 
 interface Props {
-  navigation: RecipeListNavigationProp;
+  navigation: StackNavigationProp<RecipeStackParamList, 'RecipeList'>;
 }
 
 const RecipeList: React.FC<Props> = ({navigation}) => {

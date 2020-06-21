@@ -1,7 +1,5 @@
 import React from 'react';
-import {RecipeStackParamList} from '../../../App';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Text} from 'react-native';
 import {Product} from '../../../types/Product';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
@@ -10,6 +8,7 @@ import {RouteProp} from '@react-navigation/native';
 import {YellowBox} from 'react-native';
 import {observer} from 'mobx-react';
 import {productStore} from '../../../stores/products/ProductStore';
+import {RecipeStackParamList} from '../../../navigators/RecipeStackNavigator/RecipeStackNavigator';
 
 YellowBox.ignoreWarnings([
   'Non-serializable values were found in the navigation state',
