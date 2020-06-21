@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import firestore from '@react-native-firebase/firestore';
+import React, {useState} from 'react';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Input from '../../../components/Input/Input';
 import {Text, FlatList, View, ListRenderItem} from 'react-native';
@@ -34,13 +33,25 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
   };
 
   const addIngredient = (product: Product) => {
-    setIngredients([
-      ...ingredients,
-      {
-        productKey: product.key,
-        quantity: 1,
-      },
-    ]);
+    const isProductOnList = !!ingredients.find(
+      (item: Ingredient) => item.productKey === product.key,
+    );
+
+    isProductOnList
+      ? setIngredients(
+          ingredients.map((item: Ingredient) =>
+            item.productKey === product.key
+              ? {...item, quantity: item.quantity++}
+              : item,
+          ),
+        )
+      : setIngredients([
+          ...ingredients,
+          {
+            productKey: product.key,
+            quantity: 1,
+          },
+        ]);
   };
 
   const openAddIngredientPage = () => {

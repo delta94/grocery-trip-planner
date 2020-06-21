@@ -1,8 +1,7 @@
+import React from 'react';
 import {RecipeStackParamList} from '../../../App';
-import firestore from '@react-native-firebase/firestore';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState, useEffect} from 'react';
-import {ActivityIndicator, Text} from 'react-native';
+import {Text} from 'react-native';
 import {Product} from '../../../types/Product';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
