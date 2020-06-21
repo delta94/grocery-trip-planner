@@ -6,6 +6,7 @@ import {Text} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ProductStackParamList} from '../../../App';
+import {productStore} from '../../../stores/products/ProductStore';
 
 type CreateProductNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -21,15 +22,9 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
 
   const isValidProductName = (value: string) => !!value.length;
 
-  const addProduct = async () => {
-    firestore().collection('Products').add({
-      name: inputValue,
-    });
-  };
-
   const onPressCreateProduct = () => {
     if (isValidProductName(inputValue)) {
-      addProduct();
+      productStore.addProduct(inputValue);
       navigation.navigate('ProductList');
     }
   };

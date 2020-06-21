@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -11,6 +11,7 @@ import RecipeList from './screens/Recipes/RecipeList/RecipeList';
 import CreateRecipe from './screens/Recipes/CreateRecipe/CreateRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddIngredient from './screens/Recipes/AddIngredient/AddIngredient';
+import {productStore} from './stores/products/ProductStore';
 
 const Tab = createBottomTabNavigator();
 const ProductStack = createStackNavigator();
@@ -51,6 +52,10 @@ const RecipeStackNavigator = () => {
 };
 
 const App: () => React.ReactNode = () => {
+  useEffect(() => {
+    productStore.subscribe();
+  }, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator

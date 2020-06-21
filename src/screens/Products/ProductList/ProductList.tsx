@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useLayoutEffect} from 'react';
+import {observer} from 'mobx-react';
 import firestore from '@react-native-firebase/firestore';
 import {Button, ActivityIndicator, FlatList, Text} from 'react-native';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
@@ -7,6 +8,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {ProductStackParamList} from '../../../App';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Product} from '../../../types/Product';
+import {productStore} from '../../../stores/products/ProductStore';
 
 type ProductListNavigationProp = StackNavigationProp<
   ProductStackParamList,
@@ -18,9 +20,6 @@ interface Props {
 }
 
 const ProductList: React.FC<Props> = ({navigation}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -32,38 +31,14 @@ const ProductList: React.FC<Props> = ({navigation}) => {
     });
   }, [navigation]);
 
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('Products')
-      .onSnapshot((querySnapshot) => {
-        const result: any = [];
-
-        querySnapshot.forEach((documentSnapshot) => {
-          result.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setProducts(result);
-        setIsLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
-
   const navigateToProductDetail = (product: Product) => {
     navigation.navigate('ProductDetail', product);
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <ScreenContainer>
       <FlatList
-        data={products}
+        data={productStore.products}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => navigateToProductDetail(item)}>
             <ListItem>
@@ -76,4 +51,4 @@ const ProductList: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default ProductList;
+export default observer(ProductList);
