@@ -7,6 +7,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RecipeStackParamList} from '../../../App';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Recipe} from '../../../types/Recipe';
+import {observer} from 'mobx-react';
+import {recipeStore} from '../../../stores/recipes/RecipeStore';
 
 type RecipeListNavigationProp = StackNavigationProp<
   RecipeStackParamList,
@@ -18,9 +20,6 @@ interface Props {
 }
 
 const RecipeList: React.FC<Props> = ({navigation}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [recipes, setRecipes] = useState<any>([]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -32,38 +31,14 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
     });
   }, [navigation]);
 
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('Recipes')
-      .onSnapshot((querySnapshot) => {
-        const result: any = [];
-
-        querySnapshot.forEach((documentSnapshot) => {
-          result.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setRecipes(result);
-        setIsLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
-
   const navigateToRecipeDetail = (recipe: Recipe) => {
     console.log('navigate to recipe details');
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <ScreenContainer>
       <FlatList
-        data={recipes}
+        data={recipeStore.recipes}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => navigateToRecipeDetail(item)}>
             <ListItem>
@@ -76,4 +51,4 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default RecipeList;
+export default observer(RecipeList);

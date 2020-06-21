@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Input from '../../../components/Input/Input';
-import {Text, FlatList, View} from 'react-native';
+import {Text, FlatList, View, ListRenderItem} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RecipeStackParamList} from '../../../App';
 import ListItem from '../../../components/ListItem/ListItem';
 import {Ingredient} from '../../../types/Ingredient';
 import {Product} from '../../../types/Product';
+import {productStore} from '../../../stores/products/ProductStore';
 
 type CreateRecipeNavigationProp = StackNavigationProp<
   RecipeStackParamList,
@@ -26,15 +27,8 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
 
   const isValidRecipeName = (value: string) => !!value.length;
 
-  const addRecipe = async () => {
-    firestore().collection('Recipes').add({
-      name: name,
-    });
-  };
-
   const onPressCreateRecipe = () => {
     if (isValidRecipeName(name)) {
-      addRecipe();
       navigation.navigate('RecipeList');
     }
   };
@@ -55,6 +49,20 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
     });
   };
 
+  const renderIngredient: ListRenderItem<Ingredient> = ({item}) => {
+    const product = productStore.getProductByKey(item.productKey);
+
+    return product ? (
+      <ListItem>
+        <Text>{product.name}</Text>
+      </ListItem>
+    ) : (
+      <ListItem>
+        <Text>Product missing</Text>
+      </ListItem>
+    );
+  };
+
   return (
     <ScreenContainer>
       <Input
@@ -73,11 +81,7 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
         <FlatList
           data={ingredients}
           keyExtractor={(item) => item.productKey}
-          renderItem={({item}) => (
-            <ListItem>
-              <Text>{item.productKey}</Text>
-            </ListItem>
-          )}
+          renderItem={renderIngredient}
         />
       ) : null}
 

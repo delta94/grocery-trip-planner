@@ -7,6 +7,7 @@ export interface ProductStore {
   subscriber: any;
 
   subscribe: () => void;
+  getProductByKey: (key: string) => Product | undefined;
   addProduct: (name: string) => void;
 }
 
@@ -19,6 +20,10 @@ export const productStore = observable<ProductStore>(
       firestore().collection('Products').add({
         name: name,
       });
+    },
+
+    getProductByKey(key: string) {
+      return this.products.find((item: Product) => item.key === key);
     },
 
     subscribe() {

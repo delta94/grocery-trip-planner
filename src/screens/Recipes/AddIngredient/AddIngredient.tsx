@@ -9,6 +9,8 @@ import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import ListItem from '../../../components/ListItem/ListItem';
 import {RouteProp} from '@react-navigation/native';
 import {YellowBox} from 'react-native';
+import {observer} from 'mobx-react';
+import {productStore} from '../../../stores/products/ProductStore';
 
 YellowBox.ignoreWarnings([
   'Non-serializable values were found in the navigation state',
@@ -20,42 +22,15 @@ interface Props {
 }
 
 const AddIngredient: React.FC<Props> = ({navigation, route}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('Products')
-      .onSnapshot((querySnapshot) => {
-        const result: any = [];
-
-        querySnapshot.forEach((documentSnapshot) => {
-          result.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setProducts(result);
-        setIsLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
-
   const selectProduct = (product: Product) => {
     route.params.onGoBack(product);
     navigation.goBack();
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <ScreenContainer>
       <FlatList
-        data={products}
+        data={productStore.products}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => selectProduct(item)}>
             <ListItem>
@@ -68,4 +43,4 @@ const AddIngredient: React.FC<Props> = ({navigation, route}) => {
   );
 };
 
-export default AddIngredient;
+export default observer(AddIngredient);
