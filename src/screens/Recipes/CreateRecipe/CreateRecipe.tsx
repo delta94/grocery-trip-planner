@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Input from '../../../components/Input/Input';
-import {FlatList, ListRenderItem} from 'react-native';
+import {FlatList, ListRenderItem, StyleSheet} from 'react-native';
 import Button from '../../../components/Button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ListItem from '../../../components/ListItem/ListItem';
@@ -76,6 +76,7 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
       <Input
         value={name}
         onChangeText={setName}
+        size={'large'}
         placeholder={"Enter the recipe's name"}
       />
       <Input
@@ -87,6 +88,7 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
 
       {ingredients.length ? (
         <FlatList
+          style={styles.flatList}
           data={ingredients}
           keyExtractor={(item) => item.productKey}
           renderItem={renderIngredient}
@@ -101,5 +103,11 @@ const CreateRecipe: React.FC<Props> = ({navigation}) => {
     </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  flatList: {
+    marginBottom: 12,
+  },
+});
 
 export default CreateRecipe;

@@ -6,6 +6,7 @@ interface Props {
   value: string;
   onChangeText: (value: string) => void;
   placeholder: string;
+  size?: 'medium' | 'large';
   multiLine?: boolean;
 }
 
@@ -13,11 +14,17 @@ const Input: React.FC<Props> = ({
   value,
   onChangeText,
   placeholder,
+  size = 'medium',
   multiLine = false,
 }) => {
+  const inputStyle = {
+    ...styles.input,
+    fontSize: size === 'medium' ? 12 : 24,
+  };
+
   return (
     <TextInput
-      style={styles.input}
+      style={inputStyle}
       value={value.length ? value : undefined}
       onChangeText={onChangeText}
       placeholder={placeholder}
@@ -28,9 +35,8 @@ const Input: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   input: {
-    margin: 32,
-    padding: 16,
-    borderWidth: 1,
+    padding: 12,
+    marginBottom: 6,
     textAlignVertical: 'top',
     borderColor: 'grey',
   },

@@ -8,8 +8,8 @@ const SubtleText: React.FC = ({children}) => (
 const styles = StyleSheet.create({
   subtleText: {
     color: 'lightgrey',
-    margin: 32,
     fontSize: 12,
+    marginBottom: 6,
   },
 });
 

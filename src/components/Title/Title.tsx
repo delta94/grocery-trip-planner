@@ -8,7 +8,7 @@ const Title: React.FC = ({children}) => (
 const styles = StyleSheet.create({
   title: {
     fontSize: 32,
-    margin: 32,
+    marginBottom: 6,
   },
 });
 

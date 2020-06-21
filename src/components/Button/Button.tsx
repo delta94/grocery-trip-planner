@@ -20,9 +20,11 @@ const Button: React.FC<Props> = ({children, onPress, disabled = false}) => {
 
 const styles = StyleSheet.create({
   button: {
-    margin: 32,
-    padding: 16,
-    backgroundColor: 'lightgreen',
+    padding: 12,
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 8,
+    marginBottom: 6,
   },
 });
 

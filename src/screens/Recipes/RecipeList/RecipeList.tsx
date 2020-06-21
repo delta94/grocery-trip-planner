@@ -9,6 +9,7 @@ import {Recipe} from '../../../types/Recipe';
 import {observer} from 'mobx-react';
 import {recipeStore} from '../../../stores/recipes/RecipeStore';
 import {RecipeStackParamList} from '../../../navigators/RecipeStackNavigator/RecipeStackNavigator';
+import {NavigationHelpersContext} from '@react-navigation/native';
 
 interface Props {
   navigation: StackNavigationProp<RecipeStackParamList, 'RecipeList'>;
@@ -27,7 +28,7 @@ const RecipeList: React.FC<Props> = ({navigation}) => {
   }, [navigation]);
 
   const navigateToRecipeDetail = (recipe: Recipe) => {
-    console.log('navigate to recipe details');
+    navigation.navigate('RecipeDetail', recipe);
   };
 
   return (
