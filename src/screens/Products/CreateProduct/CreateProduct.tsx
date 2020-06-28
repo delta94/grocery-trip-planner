@@ -26,6 +26,7 @@ const CreateProduct: React.FC<Props> = ({navigation}) => {
     <ScreenContainer>
       <Input
         value={inputValue}
+        size={'large'}
         onChangeText={setInputValue}
         placeholder={"Enter the product's name"}
       />
