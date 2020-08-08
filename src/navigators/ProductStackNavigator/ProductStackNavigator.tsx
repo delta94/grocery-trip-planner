@@ -4,6 +4,7 @@ import {Product} from '../../types/Product';
 import ProductList from '../../screens/Products/ProductList/ProductList';
 import ProductDetail from '../../screens/Products/ProductDetail/ProductDetail';
 import CreateProduct from '../../screens/Products/CreateProduct/CreateProduct';
+import EditProduct from '../../screens/Products/EditProduct/EditProduct';
 
 const ProductStack = createStackNavigator();
 
@@ -11,6 +12,7 @@ export type ProductStackParamList = {
   ProductList: undefined;
   CreateProduct: undefined;
   ProductDetail: Product;
+  EditProduct: Product;
 };
 
 export const ProductStackNavigator = () => (
@@ -29,6 +31,11 @@ export const ProductStackNavigator = () => (
       name="CreateProduct"
       component={CreateProduct}
       options={{title: 'Add a product'}}
+    />
+    <ProductStack.Screen
+      name="EditProduct"
+      component={EditProduct}
+      options={{title: 'Edit product'}}
     />
   </ProductStack.Navigator>
 );

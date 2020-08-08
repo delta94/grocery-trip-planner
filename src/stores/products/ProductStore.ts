@@ -9,6 +9,8 @@ export interface ProductStore {
   subscribe: () => void;
   getProductByKey: (key: string) => Product | undefined;
   addProduct: (name: string) => void;
+  editProduct: (key: string, name: string) => void;
+  deleteProduct: (key: string) => void;
 }
 
 export const productStore = observable<ProductStore>(
@@ -18,8 +20,18 @@ export const productStore = observable<ProductStore>(
 
     addProduct: async (name: string) => {
       firestore().collection('Products').add({
-        name: name,
+        name,
       });
+    },
+
+    editProduct: async (key: string, name: string) => {
+      firestore().collection('Products').doc(key).update({
+        name,
+      });
+    },
+
+    deleteProduct: async (key: string) => {
+      firestore().collection('Products').doc(key).delete();
     },
 
     getProductByKey(key: string) {

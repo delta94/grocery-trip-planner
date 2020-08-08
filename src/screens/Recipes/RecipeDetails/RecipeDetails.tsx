@@ -24,7 +24,7 @@ const renderIngredient: ListRenderItem<Ingredient> = ({item}) => {
       {product.name}
     </ListItemWithQuantity>
   ) : (
-    <ListItem>Product missing</ListItem>
+    <ListItem>Deleted product</ListItem>
   );
 };
 
