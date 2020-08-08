@@ -6,6 +6,7 @@ import CreateRecipe from '../../screens/Recipes/CreateRecipe/CreateRecipe';
 import AddIngredient from '../../screens/Recipes/AddIngredient/AddIngredient';
 import {Recipe} from '../../types/Recipe';
 import RecipeDetail from '../../screens/Recipes/RecipeDetails/RecipeDetails';
+import EditRecipe from '../../screens/Recipes/EditRecipe/EditRecipe';
 
 const RecipeStack = createStackNavigator();
 
@@ -13,6 +14,7 @@ export type RecipeStackParamList = {
   RecipeList: undefined;
   RecipeDetail: Recipe;
   CreateRecipe: undefined;
+  EditRecipe: Recipe;
   AddIngredient: {
     onGoBack: (product: Product) => void;
   };
@@ -34,6 +36,11 @@ export const RecipeStackNavigator = () => (
       name="CreateRecipe"
       component={CreateRecipe}
       options={{title: 'Create a recipe'}}
+    />
+    <RecipeStack.Screen
+      name="EditRecipe"
+      component={EditRecipe}
+      options={{title: 'Edit recipe'}}
     />
     <RecipeStack.Screen
       name="AddIngredient"

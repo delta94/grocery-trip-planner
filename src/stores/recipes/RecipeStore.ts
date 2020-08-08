@@ -13,6 +13,13 @@ export interface RecipeStore {
     description: string,
     ingredients: Ingredient[],
   ) => void;
+  updateRecipe: (
+    key: string,
+    name: string,
+    description: string,
+    ingredients: Ingredient[],
+  ) => void;
+  deleteRecipe: (key: string) => void;
 }
 
 export const recipeStore = observable<RecipeStore>(
@@ -47,6 +54,23 @@ export const recipeStore = observable<RecipeStore>(
         description,
         ingredients,
       });
+    },
+
+    updateRecipe: (
+      key: string,
+      name: string,
+      description: string,
+      ingredients: Ingredient[],
+    ) => {
+      firestore().collection('Recipes').doc(key).update({
+        name,
+        description,
+        ingredients,
+      });
+    },
+
+    deleteRecipe: (key: string) => {
+      firestore().collection('Recipes').doc(key).delete();
     },
   },
   {

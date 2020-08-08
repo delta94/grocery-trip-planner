@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
 import Title from '../../../components/Title/Title';
 import SubtleText from '../../../components/SubtleText/SubtleText';
 import {RecipeStackParamList} from '../../../navigators/RecipeStackNavigator/RecipeStackNavigator';
-import {Text, ListRenderItem, FlatList, StyleSheet} from 'react-native';
+import {Text, ListRenderItem, FlatList, StyleSheet, Button} from 'react-native';
 import {Ingredient} from '../../../types/Ingredient';
 import {productStore} from '../../../stores/products/ProductStore';
 import ListItemWithQuantity from '../../../components/ListItemWithQuantity/ListItemWithQuantity';
@@ -28,22 +28,35 @@ const renderIngredient: ListRenderItem<Ingredient> = ({item}) => {
   );
 };
 
-const RecipeDetail: React.FC<Props> = ({route, navigation}) => (
-  <ScreenContainer>
-    <Title>{route.params.name}</Title>
-    <SubtleText>{route.params.key}</SubtleText>
-    <Text>{route.params.description}</Text>
+const RecipeDetail: React.FC<Props> = ({route, navigation}) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={() => navigation.navigate('EditRecipe', route.params)}
+          title="Edit"
+        />
+      ),
+    });
+  }, [navigation]);
 
-    {route.params.ingredients.length ? (
-      <FlatList
-        style={styles.flatList}
-        data={route.params.ingredients}
-        keyExtractor={(item) => item.productKey}
-        renderItem={renderIngredient}
-      />
-    ) : null}
-  </ScreenContainer>
-);
+  return (
+    <ScreenContainer>
+      <Title>{route.params.name}</Title>
+      <SubtleText>{route.params.key}</SubtleText>
+      <Text>{route.params.description}</Text>
+
+      {route.params.ingredients.length ? (
+        <FlatList
+          style={styles.flatList}
+          data={route.params.ingredients}
+          keyExtractor={(item) => item.productKey}
+          renderItem={renderIngredient}
+        />
+      ) : null}
+    </ScreenContainer>
+  );
+};
 
 const styles = StyleSheet.create({
   flatList: {

@@ -9,7 +9,7 @@ export interface ProductStore {
   subscribe: () => void;
   getProductByKey: (key: string) => Product | undefined;
   addProduct: (name: string) => void;
-  editProduct: (key: string, name: string) => void;
+  updateProduct: (key: string, name: string) => void;
   deleteProduct: (key: string) => void;
 }
 
@@ -24,7 +24,7 @@ export const productStore = observable<ProductStore>(
       });
     },
 
-    editProduct: async (key: string, name: string) => {
+    updateProduct: async (key: string, name: string) => {
       firestore().collection('Products').doc(key).update({
         name,
       });

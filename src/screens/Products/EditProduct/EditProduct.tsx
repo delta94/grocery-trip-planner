@@ -17,9 +17,9 @@ const EditProduct: React.FC<Props> = ({route, navigation}) => {
 
   const isValidProductName = (value: string) => !!value.length;
 
-  const onPressEditProduct = () => {
+  const onPressUpdateProduct = () => {
     if (isValidProductName(inputValue)) {
-      productStore.editProduct(route.params.key, inputValue);
+      productStore.updateProduct(route.params.key, inputValue);
       navigation.navigate('ProductDetail', {
         key: route.params.key,
         name: inputValue,
@@ -41,7 +41,7 @@ const EditProduct: React.FC<Props> = ({route, navigation}) => {
         placeholder={"Enter the product's name"}
       />
       <Button
-        onPress={onPressEditProduct}
+        onPress={onPressUpdateProduct}
         disabled={!isValidProductName(inputValue)}>
         Update product
       </Button>
